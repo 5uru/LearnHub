@@ -5,6 +5,7 @@ from AISLA.v1.translation import main as translator
 
 
 class TranslationRequest(BaseModel):
+    """ """
     text: str
     src_lang: str = "dyu_Latn"
     tgt_lang: str = "fra_Latn"
@@ -16,10 +17,12 @@ app = FastAPI()
 
 @app.post("/translate")
 def translate(request: TranslationRequest):
-    """
-    Perform translation with a fine-tuned NLLB model.
+    """Perform translation with a fine-tuned NLLB model.
     The language codes are supposed to be in 8-letter format, like "eng_Latn".
     Their list can be returned by /list-languages.
+
+    :param request: TranslationRequest: 
+
     """
     output = translator(
         request.text,

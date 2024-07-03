@@ -12,7 +12,14 @@ tokenizer = NllbTokenizer.from_pretrained(model_load_name)
 
 
 def sentenize_with_fillers(text, splitter, fix_double_space=True, ignore_errors=False):
-    """Apply a sentence splitter and return the sentences and all separators before and after them"""
+    """Apply a sentence splitter and return the sentences and all separators before and after them
+
+    :param text: 
+    :param splitter: 
+    :param fix_double_space:  (Default value = True)
+    :param ignore_errors:  (Default value = False)
+
+    """
     if fix_double_space:
         text = re.sub(" +", " ", text)
     sentences = splitter.split(text)
@@ -39,7 +46,17 @@ def translate(
     by_sentence=True,
     **kwargs,
 ):
-    """Translate a text sentence by sentence, preserving the fillers around the sentences."""
+    """Translate a text sentence by sentence, preserving the fillers around the sentences.
+
+    :param text: 
+    :param src_lang: 
+    :param tgt_lang: 
+    :param max_length:  (Default value = "auto")
+    :param num_beams:  (Default value = 4)
+    :param by_sentence:  (Default value = True)
+    :param **kwargs: 
+
+    """
     if by_sentence:
         sents, fillers = sentenize_with_fillers(
             text, splitter=SentenceSplitter("fr"), ignore_errors=True
@@ -76,6 +93,17 @@ def translate_single(
     n_out=None,
     **kwargs,
 ):
+    """
+
+    :param text: 
+    :param src_lang: 
+    :param tgt_lang: 
+    :param max_length:  (Default value = "auto")
+    :param num_beams:  (Default value = 4)
+    :param n_out:  (Default value = None)
+    :param **kwargs: 
+
+    """
     tokenizer.src_lang = src_lang
     encoded = tokenizer(text, return_tensors="pt", truncation=True, max_length=512)
     if max_length == "auto":
@@ -101,6 +129,17 @@ def main(
     by_sentence=True,
     **kwargs,
 ):
+    """
+
+    :param text: 
+    :param src_lang: 
+    :param tgt_lang: 
+    :param max_length:  (Default value = "auto")
+    :param num_beams:  (Default value = 4)
+    :param by_sentence:  (Default value = True)
+    :param **kwargs: 
+
+    """
     if by_sentence:
         return translate(
             text, src_lang, tgt_lang, max_length, num_beams, by_sentence, **kwargs
