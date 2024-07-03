@@ -15,8 +15,8 @@ tokenizer = NllbTokenizer.from_pretrained(model_load_name)
 def sentenize_with_fillers(text, splitter, fix_double_space=True, ignore_errors=False):
     """Apply a sentence splitter and return the sentences and all separators before and after them
 
-    :param text: 
-    :param splitter: 
+    :param text:
+    :param splitter:
     :param fix_double_space:  (Default value = True)
     :param ignore_errors:  (Default value = False)
 
@@ -49,13 +49,13 @@ def translate(
 ):
     """Translate a text sentence by sentence, preserving the fillers around the sentences.
 
-    :param text: 
-    :param src_lang: 
-    :param tgt_lang: 
+    :param text:
+    :param src_lang:
+    :param tgt_lang:
     :param max_length:  (Default value = "auto")
     :param num_beams:  (Default value = 4)
     :param by_sentence:  (Default value = True)
-    :param **kwargs: 
+    :param **kwargs:
 
     """
     if by_sentence:
@@ -96,13 +96,13 @@ def translate_single(
 ):
     """
 
-    :param text: 
-    :param src_lang: 
-    :param tgt_lang: 
+    :param text:
+    :param src_lang:
+    :param tgt_lang:
     :param max_length:  (Default value = "auto")
     :param num_beams:  (Default value = 4)
     :param n_out:  (Default value = None)
-    :param **kwargs: 
+    :param **kwargs:
 
     """
     tokenizer.src_lang = src_lang
@@ -132,13 +132,13 @@ def main(
 ):
     """
 
-    :param text: 
-    :param src_lang: 
-    :param tgt_lang: 
+    :param text:
+    :param src_lang:
+    :param tgt_lang:
     :param max_length:  (Default value = "auto")
     :param num_beams:  (Default value = 4)
     :param by_sentence:  (Default value = True)
-    :param **kwargs: 
+    :param **kwargs:
 
     """
     if by_sentence:

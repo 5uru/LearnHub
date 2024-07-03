@@ -21,7 +21,7 @@ def translate(request: TranslationRequest):
     The language codes are supposed to be in 8-letter format, like "eng_Latn".
     Their list can be returned by /list-languages.
 
-    :param request: TranslationRequest: 
+    :param request: TranslationRequest:
 
     """
     output = translator(
