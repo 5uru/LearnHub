@@ -4,7 +4,8 @@ from sentence_splitter import SentenceSplitter
 import re
 
 model_load_name = "jonathansuru/dioula_saved_model"
-model = AutoModelForSeq2SeqLM.from_pretrained(model_load_name, low_cpu_mem_usage=True)
+model = AutoModelForSeq2SeqLM.from_pretrained(
+    model_load_name, low_cpu_mem_usage=True)
 if torch.cuda.is_available():
     model.cuda()
 tokenizer = NllbTokenizer.from_pretrained(model_load_name)
@@ -76,7 +77,8 @@ def translate_single(
     **kwargs,
 ):
     tokenizer.src_lang = src_lang
-    encoded = tokenizer(text, return_tensors="pt", truncation=True, max_length=512)
+    encoded = tokenizer(text, return_tensors="pt",
+                        truncation=True, max_length=512)
     if max_length == "auto":
         max_length = int(32 + 2.0 * encoded.input_ids.shape[1])
     generated_tokens = model.generate(
