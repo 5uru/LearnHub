@@ -6,13 +6,17 @@ from transformers import AutoModelForSeq2SeqLM
 from transformers import NllbTokenizer
 
 model_load_name = "jonathansuru/dioula_saved_model"
-model = AutoModelForSeq2SeqLM.from_pretrained(model_load_name, low_cpu_mem_usage=True)
+model = AutoModelForSeq2SeqLM.from_pretrained(model_load_name,
+                                              low_cpu_mem_usage=True)
 if torch.cuda.is_available():
     model.cuda()
 tokenizer = NllbTokenizer.from_pretrained(model_load_name)
 
 
-def sentenize_with_fillers(text, splitter, fix_double_space=True, ignore_errors=False):
+def sentenize_with_fillers(text,
+                           splitter,
+                           fix_double_space=True,
+                           ignore_errors=False):
     """Apply a sentence splitter and return the sentences and all separators before and after them
 
     :param text:
@@ -60,27 +64,24 @@ def translate(
     """
     if by_sentence:
         sents, fillers = sentenize_with_fillers(
-            text, splitter=SentenceSplitter("fr"), ignore_errors=True
-        )
+            text, splitter=SentenceSplitter("fr"), ignore_errors=True)
     else:
         sents = [text]
         fillers = ["", ""]
 
     results = []
     for sent, sep in zip(sents, fillers):
-        results.extend(
-            (
-                sep,
-                translate_single(
-                    sent,
-                    src_lang=src_lang,
-                    tgt_lang=tgt_lang,
-                    max_length=max_length,
-                    num_beams=num_beams,
-                    **kwargs,
-                ),
-            )
-        )
+        results.extend((
+            sep,
+            translate_single(
+                sent,
+                src_lang=src_lang,
+                tgt_lang=tgt_lang,
+                max_length=max_length,
+                num_beams=num_beams,
+                **kwargs,
+            ),
+        ))
     results.append(fillers[-1])
     return "".join(results)
 
@@ -106,7 +107,10 @@ def translate_single(
 
     """
     tokenizer.src_lang = src_lang
-    encoded = tokenizer(text, return_tensors="pt", truncation=True, max_length=512)
+    encoded = tokenizer(text,
+                        return_tensors="pt",
+                        truncation=True,
+                        max_length=512)
     if max_length == "auto":
         max_length = int(32 + 2.0 * encoded.input_ids.shape[1])
     generated_tokens = model.generate(
@@ -142,10 +146,8 @@ def main(
 
     """
     if by_sentence:
-        return translate(
-            text, src_lang, tgt_lang, max_length, num_beams, by_sentence, **kwargs
-        )
+        return translate(text, src_lang, tgt_lang, max_length, num_beams,
+                         by_sentence, **kwargs)
     else:
-        return translate_single(
-            text, src_lang, tgt_lang, max_length, num_beams, **kwargs
-        )
+        return translate_single(text, src_lang, tgt_lang, max_length,
+                                num_beams, **kwargs)
