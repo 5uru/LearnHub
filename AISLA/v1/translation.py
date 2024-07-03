@@ -2,7 +2,8 @@ import re
 
 import torch
 from sentence_splitter import SentenceSplitter
-from transformers import AutoModelForSeq2SeqLM, NllbTokenizer
+from transformers import AutoModelForSeq2SeqLM
+from transformers import NllbTokenizer
 
 model_load_name = "jonathansuru/dioula_saved_model"
 model = AutoModelForSeq2SeqLM.from_pretrained(model_load_name, low_cpu_mem_usage=True)
