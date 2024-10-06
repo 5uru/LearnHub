@@ -1,1 +1,1 @@
-# LeranHub
+# LearnHub
